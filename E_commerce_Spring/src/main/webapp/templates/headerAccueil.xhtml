@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Page Accueil</title>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:growl id="messages" />
+
+		<p:menubar>
+			<p:menuitem label="Accueil" icon="ui-icon-home" url="accueil.xhtml" />
+			<p:menuitem label="Accueil Client" icon="ui-icon-home" url="accueilClient.xhtml" />
+
+			<p:submenu label="Catégories" icon="ui-icon-pencil">
+				<p:menuitem value="Par Nom" url="rechercheCategorie.xhtml"
+					icon="ui-icon-star" />
+
+			</p:submenu>
+
+			<f:facet name="options">
+				<p:inputText style="margin-right:50px" placeholder="Search" />
+				<p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+			</f:facet>
+			<p:menuitem value="Connexion Admin" url="login.xhtml"
+				icon="ui-icon-extlink" />
+				
+		</p:menubar>
+	</h:form>
+	<h:graphicImage library="images" name="automne_feuille.gif" />
+	<h:graphicImage library="images" name="automne_feuille.gif" />
+</h:body>
+
+</html>

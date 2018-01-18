@@ -1,0 +1,5 @@
+body {
+	background-image:
+		url("#{ resource [ 'images/fonds-ecran-automne-12.jpg'] }");
+	background-repeat: no-repeat;
+}

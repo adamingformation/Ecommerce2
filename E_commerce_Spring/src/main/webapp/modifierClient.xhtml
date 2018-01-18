@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<title>Modifer un client</title>
+	<h:outputStylesheet library="css" name="login.css" />
+</h:head>
+
+<h:body>
+
+
+	<h1
+		style="text-align: center; color: red; margin-top: 50px; margin-left: -600px">Formulaire
+		de modification d'un client</h1>
+
+	<h:form>
+		<h:panelGrid columns="2">
+ID Client : <p:inputText id="idCl" label="ID CL"
+				value="#{cliMB.client.idClient}" required="true"></p:inputText>
+
+			<br />
+
+
+Nom : <p:inputText id="idNom" label="Nom"
+				value="#{cliMB.client.nomClient}" required="true"></p:inputText>
+
+			<br />
+			
+			
+Email : <p:inputText id="idEmail" label="Email"
+				value="#{cliMB.client.email}" required="true"></p:inputText>
+
+			<br />
+
+Adresse : <p:inputText id="idAdresse" label="Adresse"
+				value="#{cliMB.client.adresse}" required="true"></p:inputText>
+
+			<br />
+
+
+Téléphone : <p:inputText id="idTelephone" label="Telephone"
+				value="#{cliMB.client.tel}" required="true"></p:inputText>
+
+			<br />
+			<br />
+
+			<h:commandButton style="center" value="Modifier un client"
+				action="#{cliMB.modifierClient}" />
+
+		</h:panelGrid>
+
+
+	</h:form>
+
+</h:body>
+
+</html>

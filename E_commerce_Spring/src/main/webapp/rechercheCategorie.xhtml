@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Ma Page recherche</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+
+	<!-- header -->
+	<div style="height: 50px">
+		<!-- specifier l'endroit ou je veux inserer mon header avec la balise ui:insert -->
+		<ui:insert name="headerS">
+			<!-- specifier le fichier ou je veux inserer  avec la balise ui:include -->
+			<ui:include src="/templates/headerAdmin.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+
+	<h1 style="color: white; text-align: center">Formulaire de
+		recherche</h1>
+
+	<h:form>
+		<h:panelGrid columns="2">
+		
+		Nom:
+			<h:selectOneMenu id="NomCat" value="#{cMB.categorie.idCategorie}"
+				style="width:150px">
+				<f:selectItem itemLabel="Choisissez une cat " itemValue=""
+					noSelectionOption="true" />
+				<f:selectItems var="c" value="#{sessionScope.categoriesList}"
+					itemLabel="#{c.idCategorie}" itemValue="#{c.idCategorie}" />
+			</h:selectOneMenu>
+			<br />
+			<p:commandButton value="Rechercher"
+				action="#{cMB.rechercheCategorie}" icon="ui-icon-disk" update="@all" />
+		</h:panelGrid>
+
+	</h:form>
+
+
+	<p:dataTable var="cate" value="#{cMB.categorie}">
+
+		<p:column headerText="ID">
+			<h:outputText value="#{cate.idCategorie}" />
+		</p:column>
+
+		<p:column headerText="Description">
+			<h:outputText value="#{cate.description}" />
+		</p:column>
+
+		<p:column headerText="Nom de la Catégorie">
+			<h:outputText value="#{cate.nomCategorie}" />
+		</p:column>
+
+	</p:dataTable>
+
+	<p:messages id="messages" showDetail="true" closable="true" />
+
+</h:body>
+</html>

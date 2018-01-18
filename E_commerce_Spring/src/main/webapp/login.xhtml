@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Page Login</title>
+	<h:outputStylesheet library="css" name="login.css" />
+</h:head>
+
+<h:body>
+	<br />
+	<h2 style="text-align: center">Veuillez saisir vos identifiants</h2>
+	<br />
+	<center>
+		<h:form>
+			<h:panelGrid columns="2">
+		
+Mail: <h:inputText value="#{aMB.admin.mail}" />
+Mot de passe: <h:inputSecret value="#{aMB.admin.mdp}" />
+
+				<h:commandButton value="Se Connecter" action="#{aMB.seConnecter}"
+					update="@all" />
+
+			</h:panelGrid>
+
+		</h:form>
+	</center>
+
+	<h:messages style="color:red; text-align: center" />
+</h:body>
+</html>

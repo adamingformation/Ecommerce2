@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Page categories</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+
+<h:body>
+	<!-- header -->
+	<div style="height: 50px">
+		<!-- specifier l'endroit ou je veux inserer mon header avec la balise ui:insert -->
+		<ui:insert name="headerS">
+			<!-- specifier le fichier ou je veux inserer  avec la balise ui:include -->
+			<ui:include src="/templates/headerAdmin.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+
+	<h1 style="color: aqua; text-align: center">formulaire de modif</h1>
+	<h:form>
+		<h:panelGrid columns="2" id="idModif">
+		
+		ID:<p:inputText value="#{lcMB.lcommande.idNumLigne}">
+				<p:ajax event="blur" update="idModif messages"
+					listener="#{lcMB.rechercheLCommande}"/>
+			</p:inputText>
+		
+		
+		Prix : <h:inputText value="#{lcMB.lcommande.prix}" />
+	
+		Quantité : <h:inputText value="#{lcMB.lcommande.quantite}" />
+
+
+			<p:commandButton value="Modifier" action="#{lcMB.updateLCommande}"
+				update="@all" />
+
+		</h:panelGrid>
+	</h:form>
+	<p:messages id="messages" showDetail="true" closable="true" />
+</h:body>
+
+</html>

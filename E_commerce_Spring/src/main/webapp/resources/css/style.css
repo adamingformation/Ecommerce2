@@ -1,0 +1,7 @@
+body {
+	background-image:
+		url("#{ resource [ 'images/fonds-ecran-automne-feuilles-mortes-2.jpg'] }");
+	background-repeat: no-repeat;
+}
+
+

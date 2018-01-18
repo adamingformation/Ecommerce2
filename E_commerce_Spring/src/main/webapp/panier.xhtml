@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<ui:insert name="header">
+		<!-- specifier le fichier ou je veux inserer  avec la balise ui:include -->
+		<ui:include src="/templates/header.xhtml" />
+	</ui:insert>
+
+	<h1 style="text-align: center; color: blue">Votre Panier</h1>
+	<h:form>
+		<p:dataTable var="LC" value="#{sessionScope.listeLCPanier}">
+			<p:column headerText="Id Ligne Commande">
+				<h:outputText value="#{LC.idNumLigne}" />
+			</p:column>
+
+			<p:column headerText="ID Produit">
+				<h:outputText value="#{LC.produit.idProduit}" />
+			</p:column>
+
+			<p:column headerText="Quantité">
+				<h:outputText value="#{LC.quantite}" />
+			</p:column>
+
+			<p:column headerText="Prix">
+				<h:outputText value="#{LC.prix}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<br />
+		<h:commandButton style="position: absolute; right:250px;"
+			value="Valider la commande" action="#{comMB.ajouterCommande}" />
+		<h:commandButton value="Continuer mes achats" action="produit.xhtml"/>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>header</title>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:growl id="messages" />
+
+		<p:menubar>
+			<p:menuitem label="Accueil" icon="ui-icon-home" url="accueil.xhtml" />
+
+			<p:submenu label="Catégories" icon="ui-icon-pencil">
+				<p:menuitem value="Toutes" url="categories.xhtml"
+					icon="ui-icon-star" />
+				<p:menuitem value="Outils" url="catDeco.xhtml" icon="ui-icon-star" />
+				<p:menuitem value="Décoration" url="catOutils.xhtml"
+					icon="ui-icon-star" />
+			</p:submenu>
+
+			<f:facet name="options">				
+				<p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+			</f:facet>
+			
+			<p:menuitem value="Connexion Admin" url="login.xhtml"
+				icon="ui-icon-extlink" />
+			<p:menuitem value="Espace Client" url="accueilClient.xhtml"
+				icon="ui-icon-extlink" />
+			<p:menuitem value="Panier" url="panier.xhtml" icon="ui-icon-extlink" />
+		</p:menubar>
+	</h:form>
+
+</h:body>
+
+</html>

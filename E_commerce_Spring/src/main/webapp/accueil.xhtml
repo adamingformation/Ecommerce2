@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://primefaces.org/mobile">
+
+<h:head>
+	<title>Page Accueil</title>
+	<h:outputStylesheet library="css" name="style.css" />
+	<link rel="shortcut icon" type="image/x-icon" href="resources/images/feuille.png"/>
+</h:head>
+
+<h:body>
+
+	<!-- header -->
+	<div style="height: 50px">
+		<!-- specifier l'endroit ou je veux inserer mon header avec la balise ui:insert -->
+		<ui:insert name="header">
+			<!-- specifier le fichier ou je veux inserer  avec la balise ui:include -->
+			<ui:include src="/templates/headerAccueil.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+
+	<br />
+	<br />
+	<center>
+	<h:form>
+	<p:commandLink action="#{pMB.seConnecter}"><h:graphicImage library="images" name="solde.jpg" height="50%"
+			width="35%" /></p:commandLink>
+	</h:form>	
+	</center>
+
+	
+
+
+
+</h:body>
+
+</html>

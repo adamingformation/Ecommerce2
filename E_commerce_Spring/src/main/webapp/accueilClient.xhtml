@@ -1,0 +1,86 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Page Client</title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+
+<h:body>
+
+	<div style="height: 50px">
+		<!-- specifier l'endroit ou je veux inserer mon header avec la balise ui:insert -->
+		<ui:insert name="header">
+			<!-- specifier le fichier ou je veux inserer  avec la balise ui:include -->
+			<ui:include src="/templates/headerAccueil.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+
+	<br />
+	<br />
+	<h:form>
+		<p:dataTable
+			style="background-color: white ; width: 900px ; center ; margin-left : 175px"
+			var="com" value="#{lcMB.commande}">
+			<p:column headerText="N° de la commande">
+				<h:outputText value="#{com.idCommande}" />
+			</p:column>
+
+			<p:column headerText="Date de la commande">
+				<h:outputText value="#{com.dateCommande}" />
+			</p:column>
+
+
+
+		</p:dataTable>
+	</h:form>
+
+	<h:form>
+		<h:commandButton style="margin-left : 175px"
+			value="Afficher le détail"
+			action="#{lcMB.afficherLigneCommandeByIDCommande}" update="@all">
+			<f:setPropertyActionListener value="#{sessionScope.idCommande}"
+				target="#{lcMB.idCommande}" />
+		</h:commandButton>
+
+	</h:form>
+
+
+	<h:form id="tableau" rendered="#{lcMB.indice}">
+		<p:dataTable
+			style="background-color: white ; width: 900px ; center ; margin-left : 175px"
+			var="lc" value="#{lcMB.listeLigneCommande}">
+			<p:column headerText="Id Ligne Commande">
+				<h:outputText value="#{lc.idLigneCommande}" />
+			</p:column>
+
+			<p:column headerText="ID Produit">
+				<h:outputText value="#{lc.produit.idProduit}" />
+			</p:column>
+
+			<p:column headerText="Quantité">
+				<h:outputText value="#{lc.quantite}" />
+			</p:column>
+
+			<p:column headerText="Prix">
+				<h:outputText value="#{lc.prix}" />
+			</p:column>
+
+		</p:dataTable>
+
+
+		<h:commandButton style="margin-left : 175px"
+			value="Valider la commande" action="#{cMB.envoyerFacture}">
+			<f:setPropertyActionListener value="#{sessionScope.idCommande}"
+				target="#{cMB.idCommande}" />
+		</h:commandButton>
+	</h:form>
+
+
+</h:body>
+
+</html>

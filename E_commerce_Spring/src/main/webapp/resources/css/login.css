@@ -1,0 +1,5 @@
+body{
+	background-image:url("#{resource['images/fonds-ecran-automne-2015-5.jpg']}");
+	background-repeat:no-repeat;
+	background-size: cover;
+}

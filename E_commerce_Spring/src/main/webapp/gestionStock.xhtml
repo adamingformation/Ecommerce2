@@ -1,0 +1,98 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:head>
+	<title>Page Stock</title>
+	<h:outputStylesheet library="css" name="styleAdmin.css" />
+</h:head>
+
+<h:body>
+
+	<!-- header -->
+	<div style="height: 50px">
+		<!-- specifier l'endroit ou je veux inserer mon header avec la balise ui:insert -->
+		<ui:insert name="headerS">
+			<!-- specifier le fichier ou je veux inserer  avec la balise ui:include -->
+			<ui:include src="/templates/headerAdmin.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+
+
+	<h1 style="text-align : center; color:white">Gestion des Stocks</h1>
+	<hr/>
+	<br/>
+	<h2 style="text-align: center; color:white">Liste des catégories</h2>
+
+	<p:dataTable var="c" value="#{sessionScope.categoriesList}">
+
+		<p:column headerText="ID">
+			<h:outputText value="#{c.idCategorie}" />
+		</p:column>
+
+		<p:column headerText="Description">
+			<h:outputText value="#{c.description}" />
+		</p:column>
+
+		<p:column headerText="Image">
+			<h:graphicImage value="#{c.image}" width="100" height="100" />
+
+		</p:column>
+
+
+	</p:dataTable>
+
+	<h2 style="text-align: center; color:white">Liste des produits</h2>
+	
+	<h:panelGrid columns="2">
+		<h:form>
+		<p:commandButton value="Creer PDF" action="#{pMB.createPDF}" />
+	</h:form>
+	
+	<h:form>
+		<p:commandButton value="Envoyer Mail" action="#{pMB.sendEmail}" />
+	</h:form>
+	</h:panelGrid>
+
+	<p:dataTable var="p" value="#{sessionScope.produitList}">
+
+		<p:column headerText="ID">
+			<h:outputText value="#{p.idProduit}" />
+		</p:column>
+
+		<p:column headerText="Description">
+			<h:outputText value="#{p.description}" />
+		</p:column>
+
+		<p:column headerText="Designation">
+			<h:outputText value="#{p.designation}" />
+		</p:column>
+
+
+		<p:column headerText="Prix">
+			<h:outputText value="#{p.prix}" />
+		</p:column>
+		<p:column headerText="Quantité">
+			<h:outputText value="#{p.quantite}" />
+		</p:column>
+
+		<p:column headerText="Image">
+			<h:graphicImage value="#{p.image}" width="100" height="100" />
+		</p:column>
+
+
+	</p:dataTable>
+
+
+	<h:form enctype="multipart/form-data">
+		<p:fileUpload fileUploadListener="#{cMB.upload}" mode="advanced"
+			auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+			update="idImg" />
+		<h:graphicImage id="idImg" value="#{cMB.image}"></h:graphicImage>
+	</h:form>
+</h:body>
+
+</html>
