@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import fr.adaming.model.Client;
@@ -17,7 +18,8 @@ import fr.adaming.service.IClientService;
 import fr.adaming.service.ICommandeService;
 
 @ManagedBean(name = "cliMB")
-@RequestScoped
+@SessionScoped
+//@RequestScoped
 public class ClientManagedBean implements Serializable {
 
 	@ManagedProperty(value = "#{clService}")
@@ -91,7 +93,7 @@ public class ClientManagedBean implements Serializable {
 		this.commande = commandeService.updateCommande(this.commande);
 
 		if (this.client.getIdClient() != 0) {
-			return "accueil";
+			return "accueilClient";
 		} else {
 			return "loginClient";
 		}

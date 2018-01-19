@@ -135,6 +135,7 @@ public class LigneCommandeManagedBean implements Serializable {
 	public String ajouterLigneCommande() {
 		// récupération du produit par l'id entré
 		this.produit = produitService.getProduitById(this.produit.getIdProduit());
+		System.out.println("************recup produit :" +this.produit);
 		// spécification du produit pour la ligne de commande
 		this.lcommande.setProduit(this.produit);
 		// calcul du prix total

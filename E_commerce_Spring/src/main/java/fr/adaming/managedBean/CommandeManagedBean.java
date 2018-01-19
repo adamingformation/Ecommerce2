@@ -4,11 +4,11 @@ import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.List;
 
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.mail.DefaultAuthenticator;
@@ -33,31 +33,31 @@ import fr.adaming.service.ICommandeService;
 import fr.adaming.service.ILigneCommandeService;
 
 @ManagedBean(name = "comMB")
-@RequestScoped
-public class CommandeManagedBean implements Serializable{
+// @RequestScoped
+@SessionScoped
+public class CommandeManagedBean implements Serializable {
 
 	@ManagedProperty(value = "#{comService}")
 	ICommandeService commandeService;
 	@ManagedProperty(value = "#{ligneCoService}")
 	ILigneCommandeService ligneCommandeService;
-	
-//attributs
+
+	// attributs
 	private Commande commande;
 	private Client client;
 	private List<LigneCommande> listeLCo;
 	private LigneCommande ligneCommande;
 	private long idCommande;
-	
-	//Constructeurs
+
+	// Constructeurs
 	public CommandeManagedBean() {
 		this.commande = new Commande();
 		this.client = new Client();
 		this.ligneCommande = new LigneCommande();
 	}
 
-	//Getters et Setters
-	
-	
+	// Getters et Setters
+
 	public Commande getCommande() {
 		return commande;
 	}
@@ -105,56 +105,61 @@ public class CommandeManagedBean implements Serializable{
 	public void setLigneCommande(LigneCommande ligneCommande) {
 		this.ligneCommande = ligneCommande;
 	}
-	
-	//les methodes
-	public String ajouterCommande(){
-		//Créer une commande
+
+	// les methodes
+	public String ajouterCommande() {
+		// Créer une commande
 		this.commande = commandeService.addCommande(this.commande);
-		
-		//récupérer ligne co qui ont un id null
+
+		// récupérer ligne co qui ont un id null
 		this.listeLCo = ligneCommandeService.getAllLCommande();
 		System.out.println("-----------------liste lc : " + listeLCo);
-		//Donne id de la commande a chaque ligne de co
+		// Donne id de la commande a chaque ligne de co
 		for (LigneCommande LC : this.listeLCo) {
 			LC.setCommande(this.commande);
 			this.ligneCommande = ligneCommandeService.updateLCommande(LC);
 			System.out.println("-----commande de la LC : " + this.ligneCommande);
 		}
 
-		//générer une nouvelle liste des ligne commande qui sont associées à la commande
+		// générer une nouvelle liste des ligne commande qui sont associées à la
+		// commande
 		this.listeLCo = ligneCommandeService.getAllLCommandeByIdCommande(this.commande.getIdCommande());
 		System.out.println("liste des LC par id  de la commande : " + this.listeLCo);
-		
-		//On ajoute dans la session l'id de la commande pour l'avoir lors de l'affichage dans l'espace client(accueil)
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idCommande", this.commande.getIdCommande());
+
+		// On ajoute dans la session l'id de la commande pour l'avoir lors de
+		// l'affichage dans l'espace client(accueil)
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idCommande",
+				this.commande.getIdCommande());
 		if (this.commande != null) {
 			return "loginClient";
 		} else {
 			return "panier";
 		}
 	}
-	public String supprimerCommande(){
+
+	public String supprimerCommande() {
 		commandeService.deleteCommande(this.commande.getIdCommande());
 		Commande cOut = commandeService.getCommande(this.commande.getIdCommande());
 
 		if (cOut == null) {
 			return "accueil";
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("la suppression de la commande a échouée"));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("la suppression de la commande a échouée"));
 			return "supprimerCommande";
 		}
 	}
-	
-	public String modifierCommande(){
-		Commande c=commandeService.updateCommande(this.commande);
-		if(c!=null){
+
+	public String modifierCommande() {
+		Commande c = commandeService.updateCommande(this.commande);
+		if (c != null) {
 			return "accueil";
-			
-		}else{
+
+		} else {
 			return "modifierCommande";
 		}
 	}
-	
+
 	public String rechercherCommandeParIdClientNull() {
 		Commande cOut = commandeService.getCommandeByIdClNULL(this.client.getIdClient());
 		if (cOut != null) {
@@ -164,115 +169,111 @@ public class CommandeManagedBean implements Serializable{
 			return "rechercherCommande";
 		}
 	}
-public String rechercherCommandeIDC(){
-		
-		this.commande=commandeService.getCommande(this.commande.getIdCommande());
-		
+
+	public String rechercherCommandeIDC() {
+
+		this.commande = commandeService.getCommande(this.commande.getIdCommande());
+
 		return "rechercherCommande";
-		
+
 	}
 
-public String envoyerFacture() {
-	//récupération du client correspondant 
-	
-	this.listeLCo = ligneCommandeService.getAllLCommandeByIdCommande(this.idCommande);
+	public String envoyerFacture() {
+		// récupération du client correspondant
 
-	// Récupere la commande
-	this.commande = commandeService.getCommande(this.idCommande);
+		this.listeLCo = ligneCommandeService.getAllLCommandeByIdCommande(this.idCommande);
 
-	// Création d'un document de taille A4 avec une marge de 36 sur
-	// chaque bord
-	// Document document = new Document(PageSize.A4, 36, 36, 36, 36);
-	Document document = new Document();
-	try {
-		// Définir le type de document souhaité ainsi que son nom
-		PdfWriter.getInstance(document, new FileOutputStream("C:/Users/marin/Desktop/PDFTp/commande" + this.idCommande + ".pdf"));
-		// Ouverture du document
-		document.open();
-		// Definition des polices
-		Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 16);
+		// Récupere la commande
+		this.commande = commandeService.getCommande(this.idCommande);
 
-		// Création des elements à ajouter dans le document
-		String titre = "Facture pour la commande " + this.idCommande + " de "
-				+ this.commande.getClient().getNomClient() + " du " + this.commande.getDateCommande() + "\n";
-		Chunk c1 = new Chunk(titre, chapterFont);
+		// Création d'un document de taille A4 avec une marge de 36 sur
+		// chaque bord
+		// Document document = new Document(PageSize.A4, 36, 36, 36, 36);
+		Document document = new Document();
+		try {
+			// Définir le type de document souhaité ainsi que son nom
+			PdfWriter.getInstance(document,
+					new FileOutputStream("C:/Users/romai/facturescom/PDFTp/commandes/commande" + this.idCommande + ".pdf"));
+			// Ouverture du document
+			document.open();
+			// Definition des polices
+			Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 16);
 
-		Phrase p1 = new Phrase("Recapitulatif de votre commande : \n\n\n\n");
-		
-		PdfPTable table = new PdfPTable(6);
-		table.addCell("ID Ligne Commande");
-		table.addCell("Id Produit");
-		table.addCell("Produit");
-		table.addCell("Prix unitaire");
-		table.addCell("Quantité");
-		table.addCell("Prix total");
-		double prixT=0;
-		for (LigneCommande ligneCommande : this.listeLCo) {
-			table.addCell(Long.toString(ligneCommande.getIdNumLigne()));
-			table.addCell(Long.toString(ligneCommande.getProduit().getIdProduit()));
-			table.addCell(ligneCommande.getProduit().getDesignation());
-			table.addCell(Double.toString(ligneCommande.getProduit().getPrix()));
-			table.addCell(Integer.toString(ligneCommande.getQuantite()));
-			table.addCell(Double.toString(ligneCommande.getPrix()));
-			prixT=prixT+ligneCommande.getPrix();
+			// Création des elements à ajouter dans le document
+			String titre = "Facture pour la commande " + this.idCommande + " de "
+					+ this.commande.getClient().getNomClient() + " du " + this.commande.getDateCommande() + "\n";
+			Chunk c1 = new Chunk(titre, chapterFont);
+
+			Phrase p1 = new Phrase("Recapitulatif de votre commande : \n\n\n\n");
+
+			PdfPTable table = new PdfPTable(6);
+			table.addCell("ID Ligne Commande");
+			table.addCell("Id Produit");
+			table.addCell("Produit");
+			table.addCell("Prix unitaire");
+			table.addCell("Quantité");
+			table.addCell("Prix total");
+			double prixT = 0;
+			for (LigneCommande ligneCommande : this.listeLCo) {
+				table.addCell(Long.toString(ligneCommande.getIdNumLigne()));
+				table.addCell(Long.toString(ligneCommande.getProduit().getIdProduit()));
+				table.addCell(ligneCommande.getProduit().getDesignation());
+				table.addCell(Double.toString(ligneCommande.getProduit().getPrix()));
+				table.addCell(Integer.toString(ligneCommande.getQuantite()));
+				table.addCell(Double.toString(ligneCommande.getPrix()));
+				prixT = prixT + ligneCommande.getPrix();
+			}
+
+			Phrase p2 = new Phrase("Total de la commande : " + prixT + "€");
+
+			// Ajout des elements dans le documents
+			document.add(new Paragraph(c1));
+
+			document.add(new Paragraph(p1));
+
+			document.add(table);
+
+			document.add(new Paragraph(p2));
+
+		} catch (Exception e) {
+			// F
+			System.out.println("Echec envoyer mail");
+			e.printStackTrace();
 		}
-		
-		Phrase p2 = new Phrase("Total de la commande : " +prixT +"€");
-		
-		//Ajout des elements dans le documents
-		document.add(new Paragraph(c1));
-	
-		document.add(new Paragraph(p1));
+		// Fermeture du document
+		document.close();
 
-		
-		document.add(table);
-		
-		
-		document.add(new Paragraph(p2));
-		
-		
-		
-	} catch (Exception e) {
-		// F
-		System.out.println("Echec envoyer mail");
-		e.printStackTrace();
-	}
-	// Fermeture du document
-	document.close();
+		try {
+			// Creation de la piece jointe
+			EmailAttachment attachment = new EmailAttachment();
+			attachment.setPath("C:/Users/romai/facturescom/PDFTp/commande" + this.idCommande + ".pdf");
+			attachment.setDisposition(EmailAttachment.ATTACHMENT);
 
-	try{
-	 // Creation de la piece jointe
-	 EmailAttachment attachment = new EmailAttachment();
-	 attachment.setPath("C:/Users/marin/Desktop/PDFTp/commande" + this.idCommande + ".pdf");
-	 attachment.setDisposition(EmailAttachment.ATTACHMENT);
-	 
-	 
-	 // Creation du mail avec piece jointe
-	 MultiPartEmail email = new MultiPartEmail();
-	 email.setHostName("smtp.googlemail.com");
-	 email.setSmtpPort(465);
-	 // Parametrage du compte
-	 email.setAuthenticator(new DefaultAuthenticator("myentreprise44000@gmail.com",
-	 "adaming44"));
-	 email.setSSLOnConnect(true);
-	 // Adresse de l'envoyeur
-	 email.setFrom("getAllLCommandeByIdCommande@gmail.com");
-	// Objet du mail
-	 email.setSubject("Votre commande " +this.idCommande);
-	 //Corps du mail
-	 email.setMsg("Bonjour, \n \n Merci pour votre commande, veuillez trouver ci-joint le recapitulatif \n");
-	 //destinataire du mail
-	 email.addTo(this.commande.getClient().getEmail());
-	
-	 // Ajouter la pièce jointe
-	 email.attach(attachment);
-	 // envoyer le mail
-	 email.send();
-	} catch (EmailException em){
-		em.printStackTrace();
+			// Creation du mail avec piece jointe
+			MultiPartEmail email = new MultiPartEmail();
+			email.setHostName("smtp.googlemail.com");
+			email.setSmtpPort(465);
+			// Parametrage du compte
+			email.setAuthenticator(new DefaultAuthenticator("romain.meyer07@gmail.com", "UWHACKH7"));
+			email.setSSLOnConnect(true);
+			// Adresse de l'envoyeur
+			email.setFrom("getAllLCommandeByIdCommande@gmail.com");
+			// Objet du mail
+			email.setSubject("Votre commande " + this.idCommande);
+			// Corps du mail
+			email.setMsg(
+					"Bonjour, \n \n Merci pour votre achat en ligne!!!Veuillez trouver ci-joint le recapitulatif de votre commande \n");
+			// destinataire du mail
+			email.addTo(this.commande.getClient().getEmail());
+
+			// Ajouter la pièce jointe
+			email.attach(attachment);
+			// envoyer le mail
+			email.send();
+		} catch (EmailException em) {
+			em.printStackTrace();
+		}
+		return "produit";
+
 	}
-	return "produit";
-	
-	
-}
 }

@@ -76,7 +76,7 @@
 		<h:commandButton style="margin-left : 175px"
 			value="Valider la commande" action="#{comMB.envoyerFacture}">
 			<f:setPropertyActionListener value="#{sessionScope.idCommande}"
-				target="#{cMB.idCommande}" />
+				target="#{comMB.idCommande}" />
 		</h:commandButton>
 	</h:form>
 

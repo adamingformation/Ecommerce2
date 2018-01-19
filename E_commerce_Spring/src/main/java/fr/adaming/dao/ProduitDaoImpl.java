@@ -57,21 +57,22 @@ public class ProduitDaoImpl implements IProduitDao {
 		//recup session hibernate
 		Session s = sf.getCurrentSession();
 		// requete JPQL
-		String req = "SELECT p FROM Produit as p WHERE p.id=:pId";
+		String req = "FROM Produit p WHERE p.id=:pId";
 
 		// creer query
 		Query query = s.createQuery(req);
 
 		query.setParameter("pId", id);
 
-		try {
-			// envoyer et recup la liste
-			Produit p = (Produit) query.uniqueResult();
-			return p;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+//		try {
+//			// envoyer et recup la liste
+//			Produit p = (Produit) query.uniqueResult();
+//			return p;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+		return (Produit) query.uniqueResult();
 	}
 
 
