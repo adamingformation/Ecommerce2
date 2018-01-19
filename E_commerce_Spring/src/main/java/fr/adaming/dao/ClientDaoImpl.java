@@ -69,6 +69,7 @@ public class ClientDaoImpl implements IClientDao {
 
 			// obtention du client en question
 			Client clOut = (Client) query.uniqueResult();
+			System.out.println("client: " +clOut);
 			return clOut;
 		}
 		

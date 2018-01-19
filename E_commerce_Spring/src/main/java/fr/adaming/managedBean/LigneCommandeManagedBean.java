@@ -29,7 +29,7 @@ public class LigneCommandeManagedBean implements Serializable {
 	// asso uml en java
 	@ManagedProperty(value = "#{ligneCoService}")
 	private ILigneCommandeService lcService;
-	@ManagedProperty(value="#{pCoService}")
+	@ManagedProperty(value="#{pdtService}")
 	private IProduitService produitService;
 	@ManagedProperty(value="#{comService}")
 	private ICommandeService commandeService;

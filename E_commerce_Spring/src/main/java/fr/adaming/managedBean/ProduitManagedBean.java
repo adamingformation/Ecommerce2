@@ -109,6 +109,14 @@ public class ProduitManagedBean implements Serializable {
 		this.categorie = categorie;
 	}
 
+	
+	public String rechercherProduit() {
+		this.produit = produitService.getProduitById(this.produit.getIdProduit());
+		if (this.produit.getIdProduit() != 0) {
+			return "rechercherProduit";
+		} else
+			return "rechercherProduit";
+	}
 	public String ajouterProduit() {
 		this.produit = produitService.addProduitStock(this.produit, this.categorie);
 

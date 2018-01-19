@@ -113,12 +113,12 @@ public class CommandeManagedBean implements Serializable{
 		
 		//récupérer ligne co qui ont un id null
 		this.listeLCo = ligneCommandeService.getAllLCommande();
-		
+		System.out.println("-----------------liste lc : " + listeLCo);
 		//Donne id de la commande a chaque ligne de co
 		for (LigneCommande LC : this.listeLCo) {
 			LC.setCommande(this.commande);
 			this.ligneCommande = ligneCommandeService.updateLCommande(LC);
-			System.out.println("commande de la LC : " + this.ligneCommande);
+			System.out.println("-----commande de la LC : " + this.ligneCommande);
 		}
 
 		//générer une nouvelle liste des ligne commande qui sont associées à la commande

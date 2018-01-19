@@ -136,7 +136,7 @@ public class ClientManagedBean implements Serializable {
 			this.commande.setClient(this.client);
 			this.commande = commandeService.updateCommande(this.commande);
 
-			return "accueil";
+			return "accueilClient";
 		} else {
 			return "loginClient";
 		}
