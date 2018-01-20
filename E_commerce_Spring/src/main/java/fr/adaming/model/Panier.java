@@ -21,7 +21,7 @@ public class Panier implements Serializable {
 
 	//transformation uml en java
 	@OneToMany(mappedBy="panier")
-	private List<LigneCommande> listeLigne;
+	private List<LigneCommande> listeLigneCommande;
 
 	public Panier() {
 		super();
@@ -29,15 +29,15 @@ public class Panier implements Serializable {
 
 	public Panier(List<LigneCommande> listeLigne) {
 		super();
-		this.listeLigne = listeLigne;
+		this.listeLigneCommande = listeLigne;
 	}
 
 	public List<LigneCommande> getListeLigne() {
-		return listeLigne;
+		return listeLigneCommande;
 	}
 
 	public void setListeLigne(List<LigneCommande> listeLigne) {
-		this.listeLigne = listeLigne;
+		this.listeLigneCommande = listeLigne;
 	}
 	
 	

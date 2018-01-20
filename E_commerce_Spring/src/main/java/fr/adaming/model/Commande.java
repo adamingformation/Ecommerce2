@@ -32,7 +32,7 @@ public class Commande implements Serializable{
 	//transformation uml en java
 	@OneToMany
 	@JoinColumn(referencedColumnName="idCommande")
-	private List<LigneCommande> listeligne;
+	private List<LigneCommande> listeLigneCommande;
 	
 	
 	@ManyToOne
@@ -80,12 +80,12 @@ public class Commande implements Serializable{
 	
 
 	public List<LigneCommande> getListeligne() {
-		return listeligne;
+		return listeLigneCommande;
 	}
 
 
 	public void setListeligne(List<LigneCommande> listeligne) {
-		this.listeligne = listeligne;
+		this.listeLigneCommande = listeligne;
 	}
 
 

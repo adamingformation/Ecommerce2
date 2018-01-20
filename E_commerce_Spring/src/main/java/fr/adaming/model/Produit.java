@@ -36,8 +36,6 @@ public class Produit implements Serializable {
 	private byte[] photo;
 	@Transient
 	private String image;
-	
-	
 
 	// transformation relation uml en java
 	@ManyToOne
@@ -45,7 +43,7 @@ public class Produit implements Serializable {
 	private Categorie categorie;
 
 	@OneToMany(mappedBy = "produit", cascade = CascadeType.ALL)
-	private List<LigneCommande> listeLigne;
+	private List<LigneCommande> listeLigneCommande;
 
 	// constructeur
 	public Produit() {
@@ -83,9 +81,6 @@ public class Produit implements Serializable {
 		this.quantite = quantite;
 		this.photo = photo;
 	}
-
-	
-
 
 	// getter et setter
 	public long getIdProduit() {
@@ -143,8 +138,7 @@ public class Produit implements Serializable {
 	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
-	
-	
+
 	public Categorie getCategorie() {
 		return categorie;
 	}
@@ -154,13 +148,13 @@ public class Produit implements Serializable {
 	}
 
 	public List<LigneCommande> getListeLigne() {
-		return listeLigne;
+		return listeLigneCommande;
 	}
 
 	public void setListeLigne(List<LigneCommande> listeLigne) {
-		this.listeLigne = listeLigne;
+		this.listeLigneCommande = listeLigne;
 	}
-	
+
 	public String getImage() {
 		return image;
 	}
@@ -168,8 +162,6 @@ public class Produit implements Serializable {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
-
 
 	@Override
 	public String toString() {

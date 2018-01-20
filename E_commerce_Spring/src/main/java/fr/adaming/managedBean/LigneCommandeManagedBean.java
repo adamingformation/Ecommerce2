@@ -10,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +24,7 @@ import fr.adaming.service.ILigneCommandeService;
 import fr.adaming.service.IProduitService;
 
 @ManagedBean(name = "lcMB")
+//@SessionScoped
 @RequestScoped
 public class LigneCommandeManagedBean implements Serializable {
 
@@ -37,7 +39,7 @@ public class LigneCommandeManagedBean implements Serializable {
 	// Attributs
 	private Produit produit;
 	private Commande commande;
-	private LigneCommande lcommande;
+	private LigneCommande ligneCommande;
 	private Admin admin;
 	private HttpSession maSession;
 	private List<LigneCommande> listeLigneCommande;
@@ -45,7 +47,7 @@ public class LigneCommandeManagedBean implements Serializable {
 	private boolean indice = false;
 
 	public LigneCommandeManagedBean() {
-		this.lcommande = new LigneCommande();
+		this.ligneCommande = new LigneCommande();
 		this.produit = new Produit();
 		this.listeLigneCommande = new ArrayList<LigneCommande>();
 	}
@@ -98,11 +100,11 @@ public class LigneCommandeManagedBean implements Serializable {
 	}
 
 	public LigneCommande getLcommande() {
-		return lcommande;
+		return ligneCommande;
 	}
 
 	public void setLcommande(LigneCommande lcommande) {
-		this.lcommande = lcommande;
+		this.ligneCommande = lcommande;
 	}
 
 	public Admin getAdmin() {
@@ -112,6 +114,21 @@ public class LigneCommandeManagedBean implements Serializable {
 	public void setAdmin(Admin admin) {
 		this.admin = admin;
 	}
+
+	public ILigneCommandeService getLcService() {
+		return lcService;
+	}
+
+
+	public IProduitService getProduitService() {
+		return produitService;
+	}
+
+
+	public ICommandeService getCommandeService() {
+		return commandeService;
+	}
+
 
 	public HttpSession getMaSession() {
 		return maSession;
@@ -137,13 +154,13 @@ public class LigneCommandeManagedBean implements Serializable {
 		this.produit = produitService.getProduitById(this.produit.getIdProduit());
 		System.out.println("************recup produit :" +this.produit);
 		// spécification du produit pour la ligne de commande
-		this.lcommande.setProduit(this.produit);
+		this.ligneCommande.setProduit(this.produit);
 		// calcul du prix total
-		this.lcommande.setPrix(lcService.calculPrixLigneCommande(this.lcommande, this.produit));
+		this.ligneCommande.setPrix(lcService.calculPrixLigneCommande(this.ligneCommande, this.produit));
 
 		if (this.produit.getQuantite() >= 0) {
 			// modification de la quantité de produit en stock
-			int quantiteRestante = this.produit.getQuantite() - this.lcommande.getQuantite();
+			int quantiteRestante = this.produit.getQuantite() - this.ligneCommande.getQuantite();
 
 			// Modifier la quantité de produit en stock restant
 			if (quantiteRestante > 0) {
@@ -151,8 +168,8 @@ public class LigneCommandeManagedBean implements Serializable {
 				produitService.updateProduit(this.produit);
 
 				// ajout de la ligne dans la base de données
-				this.lcommande = lcService.addLCommande(this.lcommande);
-				System.out.println(this.lcommande);
+				this.ligneCommande = lcService.addLCommande(this.ligneCommande);
+				System.out.println(this.ligneCommande);
 			}
 
 		}
@@ -165,7 +182,7 @@ public class LigneCommandeManagedBean implements Serializable {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("listeLCPanier",
 				this.listeLigneCommande);
 
-		if (this.lcommande.getIdNumLigne() != 0) {
+		if (this.ligneCommande.getIdNumLigne() != 0) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("la ligne de commande est  ajoutée"));
 			return "produit";
 		} else {
@@ -179,8 +196,8 @@ public class LigneCommandeManagedBean implements Serializable {
 	public String deleteLCommande() {
 
 		// pas de retour avec un void sinon comme autre en modifiant en int
-		lcService.deleteLCommande(this.lcommande.getIdNumLigne());
-		LigneCommande lcOut = lcService.getLCommandeById(this.lcommande.getIdNumLigne());
+		lcService.deleteLCommande(this.ligneCommande.getIdNumLigne());
+		LigneCommande lcOut = lcService.getLCommandeById(this.ligneCommande.getIdNumLigne());
 		if (lcOut == null) {
 			return "accueil";
 		} else {
@@ -194,12 +211,12 @@ public class LigneCommandeManagedBean implements Serializable {
 		// récupération du produit par id choisi
 		this.produit = produitService.getProduitById(this.produit.getIdProduit());
 		// spécification du produit pour la ligne de commande
-		this.lcommande.setProduit(this.produit);
+		this.ligneCommande.setProduit(this.produit);
 		// calcul du prix total
-		this.lcommande.setPrix(lcService.calculPrixLigneCommande(this.lcommande, this.produit));
+		this.ligneCommande.setPrix(lcService.calculPrixLigneCommande(this.ligneCommande, this.produit));
 		// update de la ligne dans la base de données
-		this.lcommande = lcService.updateLCommande(this.lcommande);
-		if (this.lcommande != null) {
+		this.ligneCommande = lcService.updateLCommande(this.ligneCommande);
+		if (this.ligneCommande != null) {
 			return "accueil";
 		} else {
 			return "modifierLCommande";
@@ -207,11 +224,11 @@ public class LigneCommandeManagedBean implements Serializable {
 	}
 
 	public String rechercheLCommande() {
-		LigneCommande verif = lcService.getLCommandeById(this.lcommande.getIdNumLigne());
+		LigneCommande verif = lcService.getLCommandeById(this.ligneCommande.getIdNumLigne());
 
 		if (verif != null) {
 
-			this.lcommande = verif;
+			this.ligneCommande = verif;
 
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("la recherche n'a pas marché"));

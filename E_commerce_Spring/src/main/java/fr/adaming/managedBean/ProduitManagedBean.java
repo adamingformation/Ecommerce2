@@ -48,10 +48,14 @@ public class ProduitManagedBean implements Serializable {
 	private ICategorieService categorieService;
 
 	private List<Produit> listeProduit;
+	private List<Produit> listeProduitAll;
 	private Produit produit;
+	private int nbreProduit;
 	private Categorie categorie;
-	private List<Categorie> listeCategorie;
+	private int idCategorie;
+	private List<Categorie> listeCategories;
 	private HttpSession maSession;
+
 	private String image;
 
 	// chemin export du pdf
@@ -79,7 +83,56 @@ public class ProduitManagedBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.maSession = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("categoriesList", listeCategories);
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("produitList", listeProduit);
+	}
 
+	public List<Produit> getListeProduitAll() {
+		return listeProduitAll;
+	}
+
+	public void setListeProduitAll(List<Produit> listeProduitAll) {
+		this.listeProduitAll = listeProduitAll;
+	}
+
+	public int getNbreProduit() {
+		return nbreProduit;
+	}
+
+	public void setNbreProduit(int nbreProduit) {
+		this.nbreProduit = nbreProduit;
+	}
+
+	public int getIdCategorie() {
+		return idCategorie;
+	}
+
+	public void setIdCategorie(int idCategorie) {
+		this.idCategorie = idCategorie;
+	}
+
+	public List<Categorie> getListeCategorie() {
+		return listeCategories;
+	}
+
+	public void setListeCategorie(List<Categorie> listeCategorie) {
+		this.listeCategories = listeCategorie;
+	}
+
+	public HttpSession getMaSession() {
+		return maSession;
+	}
+
+	public void setMaSession(HttpSession maSession) {
+		this.maSession = maSession;
+	}
+
+	public IProduitService getProduitService() {
+		return produitService;
+	}
+
+	public ICategorieService getCategorieService() {
+		return categorieService;
 	}
 
 	public void setProduit(Produit produit) {
@@ -119,14 +172,15 @@ public class ProduitManagedBean implements Serializable {
 	}
 
 	public String ajouterProduit() {
+
 		this.produit = produitService.addProduitStock(this.produit, this.categorie);
 
 		if (this.produit.getIdProduit() != 0) {
 			// recup nouvelle liste
-			this.getAllProduit();
+			this.listeProduit = produitService.getAllProduit();
 
 			// mettre a jour la liste dans la sesion
-			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("produitList", listeProduit);
+			maSession.setAttribute("produitList", this.listeProduit);
 
 			return "gestionStock";
 		} else {

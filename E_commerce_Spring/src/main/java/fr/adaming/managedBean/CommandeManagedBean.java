@@ -33,8 +33,8 @@ import fr.adaming.service.ICommandeService;
 import fr.adaming.service.ILigneCommandeService;
 
 @ManagedBean(name = "comMB")
-// @RequestScoped
-@SessionScoped
+ @RequestScoped
+//@SessionScoped
 public class CommandeManagedBean implements Serializable {
 
 	@ManagedProperty(value = "#{comService}")
@@ -45,7 +45,7 @@ public class CommandeManagedBean implements Serializable {
 	// attributs
 	private Commande commande;
 	private Client client;
-	private List<LigneCommande> listeLCo;
+	private List<LigneCommande> listeLigneCommande;
 	private LigneCommande ligneCommande;
 	private long idCommande;
 
@@ -60,6 +60,14 @@ public class CommandeManagedBean implements Serializable {
 
 	public Commande getCommande() {
 		return commande;
+	}
+
+	public ICommandeService getCommandeService() {
+		return commandeService;
+	}
+
+	public ILigneCommandeService getLigneCommandeService() {
+		return ligneCommandeService;
 	}
 
 	public long getIdCommande() {
@@ -91,11 +99,11 @@ public class CommandeManagedBean implements Serializable {
 	}
 
 	public List<LigneCommande> getListeLCo() {
-		return listeLCo;
+		return listeLigneCommande;
 	}
 
 	public void setListeLCo(List<LigneCommande> listeLCo) {
-		this.listeLCo = listeLCo;
+		this.listeLigneCommande = listeLCo;
 	}
 
 	public LigneCommande getLigneCommande() {
@@ -112,10 +120,10 @@ public class CommandeManagedBean implements Serializable {
 		this.commande = commandeService.addCommande(this.commande);
 
 		// récupérer ligne co qui ont un id null
-		this.listeLCo = ligneCommandeService.getAllLCommande();
-		System.out.println("-----------------liste lc : " + listeLCo);
+		this.listeLigneCommande = ligneCommandeService.getAllLCommande();
+		System.out.println("-----------------liste lc : " + listeLigneCommande);
 		// Donne id de la commande a chaque ligne de co
-		for (LigneCommande LC : this.listeLCo) {
+		for (LigneCommande LC : this.listeLigneCommande) {
 			LC.setCommande(this.commande);
 			this.ligneCommande = ligneCommandeService.updateLCommande(LC);
 			System.out.println("-----commande de la LC : " + this.ligneCommande);
@@ -123,8 +131,8 @@ public class CommandeManagedBean implements Serializable {
 
 		// générer une nouvelle liste des ligne commande qui sont associées à la
 		// commande
-		this.listeLCo = ligneCommandeService.getAllLCommandeByIdCommande(this.commande.getIdCommande());
-		System.out.println("liste des LC par id  de la commande : " + this.listeLCo);
+		this.listeLigneCommande = ligneCommandeService.getAllLCommandeByIdCommande(this.commande.getIdCommande());
+		System.out.println("********liste des LC par id  de la commande : " + this.listeLigneCommande);
 
 		// On ajoute dans la session l'id de la commande pour l'avoir lors de
 		// l'affichage dans l'espace client(accueil)
@@ -181,7 +189,7 @@ public class CommandeManagedBean implements Serializable {
 	public String envoyerFacture() {
 		// récupération du client correspondant
 
-		this.listeLCo = ligneCommandeService.getAllLCommandeByIdCommande(this.idCommande);
+		this.listeLigneCommande = ligneCommandeService.getAllLCommandeByIdCommande(this.idCommande);
 
 		// Récupere la commande
 		this.commande = commandeService.getCommande(this.idCommande);
@@ -214,7 +222,7 @@ public class CommandeManagedBean implements Serializable {
 			table.addCell("Quantité");
 			table.addCell("Prix total");
 			double prixT = 0;
-			for (LigneCommande ligneCommande : this.listeLCo) {
+			for (LigneCommande ligneCommande : this.listeLigneCommande) {
 				table.addCell(Long.toString(ligneCommande.getIdNumLigne()));
 				table.addCell(Long.toString(ligneCommande.getProduit().getIdProduit()));
 				table.addCell(ligneCommande.getProduit().getDesignation());
@@ -236,7 +244,7 @@ public class CommandeManagedBean implements Serializable {
 			document.add(new Paragraph(p2));
 
 		} catch (Exception e) {
-			// F
+			
 			System.out.println("Echec envoyer mail");
 			e.printStackTrace();
 		}
