@@ -192,8 +192,8 @@ public class CommandeManagedBean implements Serializable {
 		Document document = new Document();
 		try {
 			// Définir le type de document souhaité ainsi que son nom
-			PdfWriter.getInstance(document,
-					new FileOutputStream("C:/Users/romai/facturescom/PDFTp/commandes/commande" + this.idCommande + ".pdf"));
+			PdfWriter.getInstance(document, new FileOutputStream(
+					"C:/Users/romai/facturescom/PDFTp/commandes/commande" + this.idCommande + ".pdf"));
 			// Ouverture du document
 			document.open();
 			// Definition des polices
@@ -245,8 +245,9 @@ public class CommandeManagedBean implements Serializable {
 
 		try {
 			// Creation de la piece jointe
+
 			EmailAttachment attachment = new EmailAttachment();
-			attachment.setPath("C:/Users/romai/facturescom/PDFTp/commande" + this.idCommande + ".pdf");
+			attachment.setPath("C:/Users/romai/facturescom/PDFTp/commandes/commande" + this.idCommande + ".pdf");
 			attachment.setDisposition(EmailAttachment.ATTACHMENT);
 
 			// Creation du mail avec piece jointe
@@ -257,14 +258,14 @@ public class CommandeManagedBean implements Serializable {
 			email.setAuthenticator(new DefaultAuthenticator("romain.meyer07@gmail.com", "UWHACKH7"));
 			email.setSSLOnConnect(true);
 			// Adresse de l'envoyeur
-			email.setFrom("getAllLCommandeByIdCommande@gmail.com");
+			email.setFrom("romain.meyer07@gmail.com");
 			// Objet du mail
 			email.setSubject("Votre commande " + this.idCommande);
 			// Corps du mail
 			email.setMsg(
 					"Bonjour, \n \n Merci pour votre achat en ligne!!!Veuillez trouver ci-joint le recapitulatif de votre commande \n");
 			// destinataire du mail
-			email.addTo(this.commande.getClient().getEmail());
+			email.addTo("romain.meyer07@gmail.com");
 
 			// Ajouter la pièce jointe
 			email.attach(attachment);
