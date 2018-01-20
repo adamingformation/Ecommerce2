@@ -139,7 +139,7 @@ public class LigneCommandeManagedBean implements Serializable {
 		// spécification du produit pour la ligne de commande
 		this.lcommande.setProduit(this.produit);
 		// calcul du prix total
-		this.lcommande.setPrix((int) lcService.calculPrixLigneCommande(this.lcommande, this.produit));
+		this.lcommande.setPrix(lcService.calculPrixLigneCommande(this.lcommande, this.produit));
 
 		if (this.produit.getQuantite() >= 0) {
 			// modification de la quantité de produit en stock
@@ -196,7 +196,7 @@ public class LigneCommandeManagedBean implements Serializable {
 		// spécification du produit pour la ligne de commande
 		this.lcommande.setProduit(this.produit);
 		// calcul du prix total
-		this.lcommande.setPrix((int) lcService.calculPrixLigneCommande(this.lcommande, this.produit));
+		this.lcommande.setPrix(lcService.calculPrixLigneCommande(this.lcommande, this.produit));
 		// update de la ligne dans la base de données
 		this.lcommande = lcService.updateLCommande(this.lcommande);
 		if (this.lcommande != null) {

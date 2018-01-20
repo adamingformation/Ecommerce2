@@ -72,9 +72,10 @@ public class LigneCommandeDaoImpl implements ILigneCommandeDao {
 		
 		lc.setCommande(lc.getCommande());
 		lc.setPanier(lc.getPanier());
-//		lc.setPrix(lc.getPrix());
-//		lc.setQuantite(lc.getQuantite());
+		lc.setPrix(lc.getPrix());
 		lc.setProduit(lc.getProduit());
+		lc.setQuantite(lc.getQuantite());
+		
 		
 		s.saveOrUpdate(lc);
 		return lc;
