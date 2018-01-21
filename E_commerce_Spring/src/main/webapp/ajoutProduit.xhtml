@@ -8,6 +8,12 @@
 <h:head>
 	<title>Page Ajout</title>
 	<h:outputStylesheet library="css" name="style.css" />
+
+	<audio loop="loop" autoplay="autoplay">
+		<source src="resources/son/automne.mp3" />
+		<source src="resources/son/automne1.ogg" />
+	</audio>
+
 </h:head>
 
 <h:body>
@@ -23,25 +29,26 @@
 	<br />
 	<h2 style="text-align: center">Formulaire d'ajout</h2>
 	<center>
-	<h:form>
-		<h:panelGrid columns="2">
+		<h:form>
+			<h:panelGrid columns="2">
 		Designation : <h:inputText value="#{pMB.produit.designation}" />
 		Description : <h:inputText value="#{pMB.produit.description}" />
 		Prix : <h:inputText value="#{pMB.produit.prix}" />
 		Quantité : <h:inputText value="#{pMB.produit.quantite}" />			
 		Id Catégorie : <h:inputText value="#{pMB.categorie.idCategorie}" />
 		
-		Photo : <p:fileUpload fileUploadListener="#{pMB.upload}" mode="advanced" auto="true" sizeLimit="100000"
-			allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="idImg"/>
-		<h:graphicImage id="idImg" value="#{pMB.image}"></h:graphicImage>	
+		Photo : <p:fileUpload fileUploadListener="#{pMB.upload}"
+					mode="advanced" auto="true" sizeLimit="100000"
+					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="idImg" />
+				<h:graphicImage id="idImg" value="#{pMB.image}"></h:graphicImage>
 
 
-			<p:commandButton value="Ajouter" action="#{pMB.ajouterProduit}"
-				update="@all" />
+				<p:commandButton value="Ajouter" action="#{pMB.ajouterProduit}"
+					update="@all" />
 
-		</h:panelGrid>
-	</h:form>
-	<h:messages style="color:red" />
+			</h:panelGrid>
+		</h:form>
+		<h:messages style="color:red" />
 	</center>
 
 </h:body>

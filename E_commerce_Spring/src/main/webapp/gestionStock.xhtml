@@ -8,6 +8,12 @@
 <h:head>
 	<title>Page Stock</title>
 	<h:outputStylesheet library="css" name="styleAdmin.css" />
+
+	<audio loop="loop" autoplay="autoplay">
+		<source src="resources/son/automne.mp3" />
+		<source src="resources/son/automne1.ogg" />
+	</audio>
+
 </h:head>
 
 <h:body>
@@ -22,10 +28,10 @@
 	</div>
 
 
-	<h1 style="text-align : center; color:white">Gestion des Stocks</h1>
-	<hr/>
-	<br/>
-	<h2 style="text-align: center; color:white">Liste des catégories</h2>
+	<h1 style="text-align: center; color: white">Gestion des Stocks</h1>
+	<hr />
+	<br />
+	<h2 style="text-align: center; color: white">Liste des catégories</h2>
 
 	<p:dataTable var="c" value="#{sessionScope.categoriesList}">
 
@@ -45,16 +51,16 @@
 
 	</p:dataTable>
 
-	<h2 style="text-align: center; color:white">Liste des produits</h2>
-	
+	<h2 style="text-align: center; color: white">Liste des produits</h2>
+
 	<h:panelGrid columns="2">
 		<h:form>
-		<p:commandButton value="Creer PDF" action="#{pMB.createPDF}" />
-	</h:form>
-	
-	<h:form>
-		<p:commandButton value="Envoyer Mail" action="#{pMB.sendEmail}" />
-	</h:form>
+			<p:commandButton value="Creer PDF" action="#{pMB.createPDF}" />
+		</h:form>
+
+		<h:form>
+			<p:commandButton value="Envoyer Mail" action="#{pMB.sendEmail}" />
+		</h:form>
 	</h:panelGrid>
 
 	<p:dataTable var="p" value="#{sessionScope.produitList}">

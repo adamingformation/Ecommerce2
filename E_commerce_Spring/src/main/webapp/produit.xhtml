@@ -8,6 +8,12 @@
 <h:head>
 	<title>Page Produit</title>
 	<h:outputStylesheet library="css" name="style.css" />
+
+	<audio loop="loop" autoplay="autoplay">
+		<source src="resources/son/automne.mp3" />
+		<source src="resources/son/automne1.ogg" />
+	</audio>
+
 </h:head>
 
 <h:body>
@@ -18,6 +24,15 @@
 			<ui:include src="/templates/header.xhtml" />
 		</ui:insert>
 	</div>
+
+	<h:outputStylesheet library="css" name="search.css" />
+	<h:form id="recherche" method="post">
+
+		<input name="saisie" type="text" placeholder="Mots-Clefs..." />
+		<h:commandButton value="rechercher produit"
+			action="#{pMB.rechercherProduit}"  icon="ui-icon-disk" update="@all" />
+
+	</h:form>
 
 	<br />
 	<br />
@@ -50,15 +65,15 @@
 					<h:outputText value="#{produit.prix}" />
 
 					<p:column headerText="Quantité souhaitée">
-						
-							<h:inputText value="#{lcMB.lcommande.quantite}" />
 
-							<p:commandLink value="Ajouter au Panier"
-								action="#{lcMB.ajouterLigneCommande}" update="@all">
-								<f:setPropertyActionListener value="#{produit.idProduit}"
-									target="#{lcMB.produit.idProduit}"></f:setPropertyActionListener>
-							</p:commandLink>
-						
+						<h:inputText value="#{lcMB.lcommande.quantite}" />
+
+						<p:commandLink value="Ajouter au Panier"
+							action="#{lcMB.ajouterLigneCommande}" update="@all">
+							<f:setPropertyActionListener value="#{produit.idProduit}"
+								target="#{lcMB.produit.idProduit}"></f:setPropertyActionListener>
+						</p:commandLink>
+
 					</p:column>
 
 

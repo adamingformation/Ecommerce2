@@ -8,36 +8,45 @@
 <h:head>
 	<title>Page categories</title>
 	<h:outputStylesheet library="css" name="style.css" />
+
+	<audio loop="loop" autoplay="autoplay">
+		<source src="resources/son/automne.mp3" />
+		<source src="resources/son/automne1.ogg" />
+	</audio>
+
 </h:head>
 
 <h:body>
 	<!-- header -->
 	<div style="height: 50px">
 		<!-- specifier l'endroit ou je veux inserer mon header avec la balise ui:insert -->
-	<ui:insert name="headerS">
-		<!-- specifier le fichier ou je veux inserer  avec la balise ui:include -->
-	<ui:include src="/templates/headerAdmin.xhtml"></ui:include>	
-	</ui:insert>
+		<ui:insert name="headerS">
+			<!-- specifier le fichier ou je veux inserer  avec la balise ui:include -->
+			<ui:include src="/templates/headerAdmin.xhtml"></ui:include>
+		</ui:insert>
 	</div>
 
-<h1 style="color: aqua;text-align: center">formulaire d'ajout</h1>
+	<h1 style="color: aqua; text-align: center">formulaire d'ajout</h1>
 	<h:form>
 		<h:panelGrid columns="2">
-		Nom de la Catégorie : <h:inputText value="#{cMB.categorie.nomCategorie}" />
+		Nom de la Catégorie : <h:inputText
+				value="#{cMB.categorie.nomCategorie}" />
 	
 		Description : <h:inputText value="#{cMB.categorie.description}" />
 
-		Photo : <p:fileUpload fileUploadListener="#{cMB.upload}" mode="advanced" auto="true" sizeLimit="100000"
-			allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="idImg"/>
-		<h:graphicImage id="idImg" value="#{cMB.image}"></h:graphicImage>
-		
-			<p:commandButton value="Ajouter" action="#{cMB.ajouterCategorie}" update="@all" />
+		Photo : <p:fileUpload fileUploadListener="#{cMB.upload}"
+				mode="advanced" auto="true" sizeLimit="100000"
+				allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="idImg" />
+			<h:graphicImage id="idImg" value="#{cMB.image}"></h:graphicImage>
+
+			<p:commandButton value="Ajouter" action="#{cMB.ajouterCategorie}"
+				update="@all" />
 
 		</h:panelGrid>
 	</h:form>
 	<h:messages style="color:red" />
 
-	
+
 
 </h:body>
 

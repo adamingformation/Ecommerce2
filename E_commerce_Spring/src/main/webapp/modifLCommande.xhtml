@@ -8,6 +8,12 @@
 <h:head>
 	<title>Page categories</title>
 	<h:outputStylesheet library="css" name="style.css" />
+
+	<audio loop="loop" autoplay="autoplay">
+		<source src="resources/son/automne.mp3" />
+		<source src="resources/son/automne1.ogg" />
+	</audio>
+
 </h:head>
 
 <h:body>
@@ -26,7 +32,7 @@
 		
 		ID:<p:inputText value="#{lcMB.lcommande.idNumLigne}">
 				<p:ajax event="blur" update="idModif messages"
-					listener="#{lcMB.rechercheLCommande}"/>
+					listener="#{lcMB.rechercheLCommande}" />
 			</p:inputText>
 		
 		

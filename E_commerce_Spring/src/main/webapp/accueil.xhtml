@@ -8,7 +8,12 @@
 <h:head>
 	<title>Page Accueil</title>
 	<h:outputStylesheet library="css" name="style.css" />
-	<link rel="shortcut icon" type="image/x-icon" href="resources/images/feuille.png"/>
+	<link rel="shortcut icon" type="image/x-icon"
+		href="resources/images/feuille.png" />
+	<audio loop="loop" autoplay="autoplay">
+		<source src="resources/son/automne.mp3" />
+		<source src="resources/son/automne1.ogg" />
+	</audio>
 </h:head>
 
 <h:body>
@@ -25,13 +30,15 @@
 	<br />
 	<br />
 	<center>
-	<h:form>
-	<p:commandLink action="#{pMB.seConnecter}"><h:graphicImage library="images" name="solde.jpg" height="50%"
-			width="35%" /></p:commandLink>
-	</h:form>	
+		<h:form>
+			<p:commandLink action="#{pMB.seConnecter}">
+				<h:graphicImage library="images" name="solde.jpg" height="50%"
+					width="35%" />
+			</p:commandLink>
+		</h:form>
 	</center>
 
-	
+
 
 
 

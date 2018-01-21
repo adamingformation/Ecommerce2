@@ -166,9 +166,9 @@ public class ProduitManagedBean implements Serializable {
 	public String rechercherProduit() {
 		this.produit = produitService.getProduitById(this.produit.getIdProduit());
 		if (this.produit.getIdProduit() != 0) {
-			return "rechercherProduit";
+			return "produit";
 		} else
-			return "rechercherProduit";
+			return "produit";
 	}
 
 	public String ajouterProduit() {
