@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://primefaces.org/mobile">
+
+<h:head>
+	<title>Page </title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+
+<h:body>
+	<!-- header -->
+	<div style="height: 50px">
+		<!-- specifier l'endroit ou je veux inserer mon header avec la balise ui:insert -->
+		<ui:insert name="header">
+			<!-- specifier le fichier ou je veux inserer  avec la balise ui:include -->
+			<ui:include src="/templates/headerAccueil.xhtml"></ui:include>
+		</ui:insert>
+	</div>
+<b style="color:white">
+<h1>Histoire</h1>
+<h2>Notre entreprise a été crée en 2018. Jeune entreprise dans le domaine de la vente d'outils de bricolage et de décoration. <br/>
+Notre thème principale est l'automne.</h2>
+
+</b>
+<center>
+<h:graphicImage library="images" name="feuilledrole.gif"></h:graphicImage>
+	
+</center>
+
+
+</h:body>
+
+</html>
