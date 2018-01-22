@@ -345,5 +345,13 @@ public class ProduitManagedBean implements Serializable {
 		return "produit.xhtml";
 
 	}
+public String seConnectergoogleMap(){
+		
+		return "googleMaps2.xhtml";
+	}
+	public String quiSommesNous(){
+		
+		return "quiSommesNous.xhtml";
+	}
 
 }

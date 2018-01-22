@@ -7,15 +7,26 @@
 
 <h:head>
 	<title>Page </title>
-	
+	<h:outputStylesheet library="css" name="style.css" />
+	<link rel="shortcut icon" type="image/x-icon"
+		href="resources/images/feuille.png" />
 </h:head>
 
 <h:body>
-
+	<!-- header -->
+	<div style="height: 50px">
+		<!-- specifier l'endroit ou je veux inserer mon header avec la balise ui:insert -->
+		<ui:insert name="header">
+			<!-- specifier le fichier ou je veux inserer  avec la balise ui:include -->
+			<ui:include src="/templates/headerAccueil.xhtml"></ui:include>
+		</ui:insert>
+	</div>
 <center>
-<h:graphicImage library="images" name="maps.png"></h:graphicImage>
-<h2>Place Strasbourg</h2><br/>
-<h2>29200 Brest</h2>
+<h:graphicImage library="images" name="maps.png" height="250px" width="400px"/>
+<br/>
+<p style="color:white">
+Place Strasbourg
+29200 Brest</p>
 </center>	
 
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.adaming.dao.ICommandeDao;
+import fr.adaming.model.Client;
 import fr.adaming.model.Commande;
 
 @Service("comService")
@@ -24,6 +25,7 @@ public class CommandeServiceImpl implements ICommandeService{
 	//Methodes
 	@Override
 	public Commande addCommande(Commande c) {
+		
 		Commande cOut = commandeDao.addCommande(c);
 		return cOut;
 	}
